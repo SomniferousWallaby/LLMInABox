@@ -1,3 +1,5 @@
+# Simple Commmand-Line Chat with Deepseek in your Console
+
 import requests
 import json
 

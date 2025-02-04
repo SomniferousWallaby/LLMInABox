@@ -2,15 +2,17 @@
 <html>
 <head>
     <title>Chat with Deepseek</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> </head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <body>
     <h1>Chat with Deepseek</h1>
-    <div id="chatbox">
-    </div>
+    <div id="chatbox"></div>
     <input type="text" id="user_input" placeholder="Type your message...">
     <button id="send_button">Send</button>
 
     <script>
+        let sessionId = null; 
+
         $(document).ready(function() {
             $("#send_button").click(sendMessage);
             $('#user_input').keypress(function(e) {
@@ -20,29 +22,38 @@
             });
         });
 
-        function sendMessage() {
+        async function sendMessage() {
             var user_message = $("#user_input").val();
-            $("#user_input").val(""); // Clear input field
+            $("#user_input").val(""); 
 
-            // Display user's message
             $("#chatbox").append("<p><b>You:</b> " + user_message + "</p>");
 
-            $.ajax({
-                type: "POST",
-                url: "/chat",
-                contentType: "application/json",
-                data: JSON.stringify({ message: user_message }),
-                success: function(data) {
-                    $("#chatbox").append("<p><b>Deepseek:</b> " + data.response + "</p>");
-                },
-                error: function(error) {
-                    console.error("Error:", error);
-                    $("#chatbox").append("<p><b>Error:</b> " + error.responseJSON.error + "</p>");
+            const data = { message: user_message };
+            if (sessionId) {
+                data.session_id = sessionId;
+            }
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+
+                const responseData = await response.json();
+
+                if (!sessionId && responseData.session_id) { // Store session ID if new
+                    sessionId = responseData.session_id;
                 }
-            });
+
+                $("#chatbox").append("<p><b>Deepseek:</b> " + responseData.response + "</p>");
+
+
+            } catch (error) {
+                console.error("Error:", error);
+                $("#chatbox").append("<p><b>Error:</b> " + (error.responseJSON ? error.responseJSON.error : error)  + "</p>"); // Improved error display
+            }
         }
-
-
     </script>
 </body>
 </html>

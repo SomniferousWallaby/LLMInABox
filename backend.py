@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import requests
 from dotenv import load_dotenv
 import json
+import uuid
 
 load_dotenv()
 
@@ -9,6 +10,7 @@ app = Flask(__name__)
 
 #DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
 DEEPSEEK_API_URL = "http://localhost:11434/api/generate"
+conversation_history = {}
 
 @app.route('/')
 def index():
@@ -17,6 +19,14 @@ def index():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_message = request.json['message']
+    session_id = request.json.get('session_id')
+    
+    if not session_id:
+        session_id = str(uuid.uuid4())
+    
+    history = conversation_history.get(session_id, [])
+    history.append({'role': 'user', 'content': user_message})
+
     
     headers = {
         'Content-Type': 'application/json',
@@ -24,10 +34,7 @@ def chat():
     
     data = {
         "model": "deepseek-r1:32b",
-        #"messages": [
-        #    {"role": "user", "content": user_message}
-        #],
-        "prompt": user_message,
+        "prompt": "\n".join([f"{msg['role']}: {msg['content']}" for msg in history]),
         "temperature": 0.7,
         "max_tokens": 500,
         "top_p": 0.9,
@@ -48,7 +55,9 @@ def chat():
                 except json.JSONDecodeError as e:
                     print(f"Warning: Invalid JSON chunk: {e}")
 
-        return jsonify({'response': full_response}) # Return the combined response
+        history.append({"role": "assistant", "content": full_response}) # Store Deepseek's response
+        conversation_history[session_id] = history # Update the history for this session
+        return jsonify({'response': full_response, 'session_id': session_id})
 
     except Exception as e:
         print(f"Error: {e}")
