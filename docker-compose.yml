@@ -6,8 +6,10 @@ services:
     volumes:
         - ~/.cache/ollama:/root/.cache/ollama  # Optional: Cache models on the host
         - ./pull_model.sh:/app/pull_model.sh
+    # runtime: nvidia   # Enable to use the NVIDIA runtime and your Nvida GPU
     environment:
       - MODEL_NAME=${MODEL_NAME}
+      # - NVIDIA_VISIBLE_DEVICES=all # Enable to use your Nvidia GPU
     entrypoint: /bin/bash -c "/app/pull_model.sh" 
     init: true
 
@@ -18,7 +20,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - OLLAMA_API_URL=${OLLAMA_API_URL} # Using Ollama's service name as the hostname
+      - OLLAMA_API_URL=${OLLAMA_API_URL}
       - MODEL_NAME=${MODEL_NAME}
     depends_on:
       - ollama
