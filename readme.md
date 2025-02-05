@@ -27,9 +27,8 @@ This project sets up a chat interface using a local large language model (LLM) p
 
 1. **Clone the Repository:**
     ```
-    bash
-    git clone https://github.com/your-username/your-repo-name  # Replace with your actual repo
-    cd your-repo-name
+    git clone https://github.com/SomniferousWallaby/LLMInABox
+    cd LLMInABox
     ``` 
 
 2. **Create/Update the .env file:** 
