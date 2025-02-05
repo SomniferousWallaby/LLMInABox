@@ -6,12 +6,8 @@ This project sets up a chat interface using a local large language model (LLM) p
 
 * Chat interface using HTML, CSS, and JavaScript.
 * Flask backend to handle communication with the Ollama server.
-* Streaming responses for real-time chat updates.
 * Dockerized setup for easy deployment and portability.
 * GPU acceleration support for improved performance.
-* Error handling and logging for robust operation.
-* Health checks and process management for container reliability.
-
 
 
 ## Prerequisites
