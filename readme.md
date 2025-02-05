@@ -4,7 +4,7 @@ This project sets up a chat interface using a local large language model (LLM) p
 
 ## Features
 
-* Chat interface using HTML, CSS, and JavaScript.
+* Chat interface using HTML, and JavaScript.
 * Flask backend to handle communication with the Ollama server.
 * Dockerized setup for easy deployment and portability.
 * GPU acceleration support for improved performance.
@@ -43,6 +43,8 @@ Create or Update the .env file in the project's root directory and set the follo
 
 ## Usage
 Open your web browser and go to http://localhost:5000 to access the chat interface. Type your messages and click "Send" or press Enter.
+
+*Note: The container may take a while to initially start, depending on the size of the model you select. The model is downloaded inside the ollama docker container on launch, and needs to finish downloading before the app will function properly.* 
 
 ## GPU Acceleration
 To enable GPU acceleration, make sure you have the NVIDIA drivers, CUDA Toolkit, and nvidia-container-toolkit installed on your host machine (see Prerequisites). The docker-compose.yml file is NOT configured to use the NVIDIA runtime or make the GPU available to the Ollama container by default.
