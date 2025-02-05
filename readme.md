@@ -27,8 +27,8 @@ This project sets up a chat interface using a local large language model (LLM) p
     cd LLMInABox
     ``` 
 
-2. **Create/Update the .env file:** 
-Create or Update the .env file in the project's root directory and set the following environment variables:
+2. **Update the .env file:** 
+Update the .env file in the project's root directory and set the following environment variables:
     ```
     MODEL_NAME=deepseek-r1:32b # Or the name of the model you want to use in Ollama. This should be automatically pulled into your ollama container when run through docker-compose.
     OLLAMA_API_URL=http://ollama:11434/api/generate
