@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chat with Deepseek</title>
+    <title>Chat with You Local LLM</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Chat with Deepseek</h1>
+    <h1>Chat with Your Local LLM</h1>
     <div id="chatbox"></div>
     <input type="text" id="user_input" placeholder="Type your message...">
     <button id="send_button">Send</button>
@@ -46,7 +46,7 @@
                     sessionId = responseData.session_id;
                 }
 
-                $("#chatbox").append("<p><b>Deepseek:</b> " + responseData.response + "</p>");
+                $("#chatbox").append("<p><b>LLM:</b> " + responseData.response + "</p>");
 
 
             } catch (error) {

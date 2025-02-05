@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy project files
 COPY requirements.txt .
 COPY backend.py .
-COPY templates/chat.html .
+COPY templates/ templates/
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt

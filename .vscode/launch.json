@@ -12,7 +12,8 @@
             "module": "flask",
             "env": {
                 "FLASK_APP": "backend.py",
-                "FLASK_DEBUG": "1"
+                "FLASK_DEBUG": "1",
+                "MODEL_NAME": "deepseek-r1:32b"
             },
             "args": [
                 "run",

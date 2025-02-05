@@ -1,0 +1,24 @@
+services:
+  ollama:
+    container_name: ollama
+    hostname: ollama
+    image: ollama/ollama # Official Ollama image
+    volumes:
+        - ~/.cache/ollama:/root/.cache/ollama  # Optional: Cache models on the host
+        - ./pull_model.sh:/app/pull_model.sh
+    environment:
+      - MODEL_NAME=${MODEL_NAME}
+    entrypoint: /bin/bash -c "/app/pull_model.sh" 
+    init: true
+
+  chat-app:
+    container_name: ollama-chat
+    hostname: ollama-chat
+    build: .  # Build from the current directory
+    ports:
+      - "5000:5000"
+    environment:
+      - OLLAMA_API_URL=${OLLAMA_API_URL} # Using Ollama's service name as the hostname
+      - MODEL_NAME=${MODEL_NAME}
+    depends_on:
+      - ollama
