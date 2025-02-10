@@ -2,6 +2,8 @@
 
 This project sets up a chat interface using a local large language model (LLM) powered by Ollama, served through a Flask backend.
 
+Running this project through docker compose will spin up 2 docker containers. One will run Ollama and the model you configure in `.env`. The second will run the Flask application used to chat with your chosen model. Please note that the model of your choice will be downloaded at container start, so initial startup can take a while depending on your internet speed.
+
 ## Features
 
 * Chat interface using HTML, and JavaScript.
